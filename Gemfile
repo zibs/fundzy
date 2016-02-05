@@ -49,8 +49,10 @@ end
 gem 'bootstrap-sass'
 group :development, :test do
   gem 'pry'
-  gem 'rspec-rails', '~> 3.0.0'
-  gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'rspec-rails', '~> 3.4.0'
+  gem 'factory_girl_rails'
+  gem 'guard-rspec', require: false
+  gem "faker"
 end
 
 group :development do
