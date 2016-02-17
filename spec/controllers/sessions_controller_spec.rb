@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe SessionsController, type: :controller do
 
   let(:user) { FactoryGirl.create(:user) }
-
+  # let(:user) { create(:user) }
+  # helper methods
   describe "#new" do
     it "renders the sign in page" do
       get :new
@@ -48,7 +49,7 @@ RSpec.describe SessionsController, type: :controller do
         expect(response).to render_template(:new)
       end
 
-      it "doesn't set the session id with bad data " do
+      it "doesn't set the session id with invalid data " do
         sign_in_invalid_user
         expect(session[:user_id]).to eq(nil)
 
@@ -58,9 +59,7 @@ RSpec.describe SessionsController, type: :controller do
         sign_in_invalid_user
         expect(flash[:warning]).to be
       end
-
     end
-
   end
 
   describe "#destroy" do
