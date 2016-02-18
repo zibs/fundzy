@@ -1,7 +1,9 @@
 class User < ActiveRecord::Base
   has_secure_password
-  has_many :campaigns, dependent: :destroy
+
+  has_many :campaigns, dependent: :nullify
   has_many :pledges, dependent: :destroy
+
   validate :password_length
 
   VALID_EMAIL_REGEX = /\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i

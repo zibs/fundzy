@@ -184,7 +184,7 @@ RSpec.describe CampaignsController, :type => :controller do
         # expect(Campaign.count).to be(0)
         # or
         # campaign
-        expect { delete :destroy, id: campaign.id}.to change {Campaign.count}.by(-1)
+        expect {delete :destroy, id: campaign.id}.to change {Campaign.count}.by(-1)
       end
 
       it "redirects to the campaign index page" do
