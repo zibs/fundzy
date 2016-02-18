@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+
   root "campaigns#index"
-  resources :campaigns
+  resources :campaigns do
+    resources :pledges, only: [:create, :destroy]
+  end
   resources :users, only: [:new, :create]
 
   resources :sessions, only: [:new, :create] do

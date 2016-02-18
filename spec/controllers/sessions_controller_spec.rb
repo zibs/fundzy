@@ -65,12 +65,14 @@ RSpec.describe SessionsController, type: :controller do
   describe "#destroy" do
 
     before do
-      post :create, session: { email: user.email, password: user.password }
+      # post :create, session: { email: user.email, password: user.password }
+      request.session[:user_id] = user.id
       delete :destroy
     end
 
     it "sets the session id to nil" do
-      expect(session[:user_id]).to eq(nil)
+      # expect(session[:user_id]).to eq(nil)
+      expect(session[:user_id]).to_not be
     end
 
     it "sets a flash message" do

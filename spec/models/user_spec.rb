@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  
   let(:user) { FactoryGirl.create(:user)}
   # FactoryGirl.attributes_for(:user)
     describe "Validations" do
