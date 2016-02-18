@@ -1,5 +1,6 @@
 class CampaignsController < ApplicationController
-  before_action :find_campaign, only: [:show, :edit, :update, :destroy]
+  before_action :find_campaign, only: [:show, :edit, :update]
+  before_action :authenticate_user, except: [:show, :index]
 
   def index
     @campaigns = Campaign.order("created_at ASC")
@@ -40,8 +41,9 @@ class CampaignsController < ApplicationController
   end
 
   def destroy
-    @campaign.destroy
-    redirect_to((campaigns_path), {alert: "task removed!"})
+    campaign = current_user.campaigns.find(params[:id])
+    campaign.destroy
+    redirect_to((root_path), flash: {danger: "task removed!"})
   end
 
       private

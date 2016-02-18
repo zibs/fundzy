@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe CampaignsController, :type => :controller do
+  let(:user) {FactoryGirl.create(:user)}
+  let(:campaign) {FactoryGirl.create(:campaign)}
+  let(:other_campaign) {FactoryGirl.create(:campaign)}
 
-  let(:campaign) { FactoryGirl.create(:campaign) }
   # let does the exact same -- shortcut cnoditional assignment
   # def campaign
   #   @campaign ||= FactoryGirl.create(:campaign)
@@ -10,7 +12,7 @@ RSpec.describe CampaignsController, :type => :controller do
 
   # convention to describe action
   describe "#new" do
-
+    before{ log_in(user) }
     it "renders the new template" do
       # this mimics sending a get request to the new action
       get :new
@@ -26,6 +28,8 @@ RSpec.describe CampaignsController, :type => :controller do
   end
 
   describe "#create" do
+    before{ log_in(user) }
+
     context "with valid attributes" do
 
       def valid_request
@@ -121,6 +125,8 @@ RSpec.describe CampaignsController, :type => :controller do
   end
 
   describe "#edit" do
+    before{ log_in(user) }
+
     before do
       # given a campaign object
       # @c = FactoryGirl.create(:campaign)
@@ -137,6 +143,7 @@ RSpec.describe CampaignsController, :type => :controller do
     end
 
     describe "#update" do
+      before{ log_in(user) }
       context "with valid attributes" do
         before do
           patch :update, id: campaign.id, campaign: { name: "pew pew pew" }
@@ -174,31 +181,71 @@ RSpec.describe CampaignsController, :type => :controller do
     end
 
     describe "#destroy" do
-      let!(:campaign) { FactoryGirl.create(:campaign) }
-      # before do
-      #   campaign # this will create the campaign
-      #   @db_count = Campaign.count
-      #   delete :destroy, id: campaign.id
-      # end
-      it "removes the campaign from the database" do
-        # expect(Campaign.count).to be(0)
-        # or
-        # campaign
-        expect {delete :destroy, id: campaign.id}.to change {Campaign.count}.by(-1)
+
+      context "authenticated user" do
+        before {log_in(user)}
+
+        context "authorized user" do
+
+          let!(:campaign) {FactoryGirl.create(:campaign, {user: user})}
+
+          def delete_request
+            delete :destroy, id: campaign
+          end
+
+          it "destroys the campaign record in the database" do
+            expect{delete_request}.to change{Campaign.count}.by(-1)
+          end
+
+          it "redirects to the home page" do
+            delete_request
+            expect(response).to redirect_to(root_path)
+          end
+        end
+
+        context "unauthorized user" do
+          it "raises an error" do
+            expect{delete :destroy, id: other_campaign}.to raise_error(ActiveRecord::RecordNotFound)
+          end
+        end
+
       end
 
-      it "redirects to the campaign index page" do
-        delete :destroy, id: campaign.id
-        expect(response).to redirect_to(campaigns_path)
-      end
+      # let!(:campaign) {FactoryGirl.create(:campaign)}
 
-      it "sets a flash message" do
-        delete :destroy, id: campaign.id
-        expect(flash[:alert]).to be
+
+
+      context "unauthenticated user" do
+
+        it "redirects the user to the sign in page" do
+          delete :destroy, id: campaign
+          expect(response).to redirect_to(new_session_path)
+        end
+
       end
     end
+  end
 
-
-
-
-end
+    #   let!(:campaign) { FactoryGirl.create(:campaign) }
+    #   # before do
+    #   #   campaign # this will create the campaign
+    #   #   @db_count = Campaign.count
+    #   #   delete :destroy, id: campaign.id
+    #   # end
+    #   it "removes the campaign from the database" do
+    #     # expect(Campaign.count).to be(0)
+    #     # or
+    #     # campaign
+    #     expect {delete :destroy, id: campaign.id}.to change {Campaign.count}.by(-1)
+    #   end
+    #
+    #   it "redirects to the campaign index page" do
+    #     delete :destroy, id: campaign.id
+    #     expect(response).to redirect_to(campaigns_path)
+    #   end
+    #
+    #   it "sets a flash message" do
+    #     delete :destroy, id: campaign.id
+    #     expect(flash[:alert]).to be
+    #   end
+    # end
