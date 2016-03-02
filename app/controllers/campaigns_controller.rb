@@ -41,8 +41,9 @@ class CampaignsController < ApplicationController
   end
 
   def destroy
-    campaign = current_user.campaigns.find(params[:id])
-    campaign.destroy
+    user_campaign.destroy
+    # campaign = current_user.campaigns.find(params[:id])
+    # campaign.destroy
     redirect_to((root_path), flash: {danger: "task removed!"})
   end
 
@@ -54,6 +55,10 @@ class CampaignsController < ApplicationController
 
         def find_campaign
           @campaign = Campaign.find(params[:id])
+        end
+
+        def user_campaign
+          @user_campaign ||= current_user.campaigns.find(params[:id])
         end
 
 end

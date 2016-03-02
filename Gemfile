@@ -42,6 +42,9 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem "faker"
   gem "nyan-cat-formatter"
+  gem "capybara"
+  gem "launchy"
+  gem 'simplecov', :require => false
 end
 
 group :development do

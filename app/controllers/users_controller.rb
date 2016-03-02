@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       sign_in(@user)
-      redirect_to root_path, flash: { success: "User Created" }
+      redirect_to root_path, flash: { success: "Account Created" }
     else
       flash[:warning] = "Invalid Attributes... Refer to Errors Below"
       render :new

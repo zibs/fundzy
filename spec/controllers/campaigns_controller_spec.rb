@@ -211,10 +211,6 @@ RSpec.describe CampaignsController, :type => :controller do
 
       end
 
-      # let!(:campaign) {FactoryGirl.create(:campaign)}
-
-
-
       context "unauthenticated user" do
 
         it "redirects the user to the sign in page" do
