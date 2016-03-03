@@ -5,9 +5,12 @@ class Campaign < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: [:slugged, :history]
 
+  # mount the uploader. :image is a field in the DB that stores the image name. Uploader is the uploader class that was generated with carrierwave.
+  mount_uploader :image, ImageUploader
+  # associate
   has_many :pledges, dependent: :destroy
   belongs_to :user
-
+  # validate
   validates :name, presence: true, uniqueness: true
   validates :goal, presence: true, numericality: { greater_than_or_equal_to: 10 }
 

@@ -28,6 +28,13 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'cancancan'
 gem 'simple_form'
 gem 'friendly_id', '~> 5.1.0'
+gem 'figaro'
+
+# image uploading/manipulation
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -46,6 +53,7 @@ group :development, :test do
   gem "capybara"
   gem "launchy"
   gem 'simplecov', :require => false
+  gem 'quiet_assets'
 end
 
 group :development do

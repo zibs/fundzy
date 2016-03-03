@@ -3,5 +3,7 @@
   <%= f.input :description, label: false %>
   <%= f.input :goal, as: :string %>
   <%= f.input :end_date %>
+  <%= f.input :image, input_html: {class: "btn btn-primary"} %>
+  <%# f.file_field :image %>
   <%= f.submit class: "btn btn-primary btn-block" %>
 <% end %>
