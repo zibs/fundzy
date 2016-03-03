@@ -1,5 +1,5 @@
 class CampaignsController < ApplicationController
-  before_action :find_campaign, only: [:show, :edit, :update]
+  before_action :find_campaign, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user, except: [:show, :index]
   # before_action :authorize_user
 
@@ -34,6 +34,9 @@ class CampaignsController < ApplicationController
   end
 
   def update
+    # we need to force the slug to be nil before updating it in order to have FriendlyId generate a new slug for su. We're using `history` option with FriendlyId so old URLs still work.
+
+    @campaign.slug = nil
     if @campaign.update(campaign_params)
       redirect_to(campaign_path(@campaign), { notice: "Campaign updated!"})
     else
@@ -44,7 +47,7 @@ class CampaignsController < ApplicationController
 
   def destroy
     user_campaign.destroy
-    # campaign = current_user.campaigns.find(params[:id])
+    # campaign = current_user.campaigns.friendly.find(params[:id])
     # campaign.destroy
     redirect_to((root_path), flash: {danger: "Campaign removed!"})
   end
@@ -56,11 +59,11 @@ class CampaignsController < ApplicationController
         end
 
         def find_campaign
-          @campaign = Campaign.find(params[:id])
+          @campaign = Campaign.friendly.find(params[:id])
         end
 
         def user_campaign
-          @user_campaign ||= current_user.campaigns.find(params[:id])
+          @user_campaign ||= current_user.campaigns.friendly.find(params[:id])
         end
 
 end

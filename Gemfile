@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bcrypt', '~> 3.1.7'
 gem 'cancancan'
 gem 'simple_form'
+gem 'friendly_id', '~> 5.1.0'
 # Use Unicorn as the app server
 # gem 'unicorn'
 

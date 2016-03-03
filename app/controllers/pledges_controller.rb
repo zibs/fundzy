@@ -4,7 +4,7 @@ class PledgesController < ApplicationController
   # before_action :authorize_user, only: [:create, :destroy]
 
   def create
-    @campaign = Campaign.find(params[:campaign_id])
+    @campaign = Campaign.friendly.find(params[:campaign_id])
     @pledge = Pledge.new(pledge_params)
 
     @pledge.campaign = @campaign

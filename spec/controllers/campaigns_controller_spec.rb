@@ -50,7 +50,7 @@ RSpec.describe CampaignsController, :type => :controller do
 
       it "sets a flash notice message" do
         valid_request
-        expect(flash[:notice]).to be
+        expect(flash[:success]).to be
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe CampaignsController, :type => :controller do
 
       it "sets a flash alert message" do
         invalid_request
-        expect(flash[:alert]).to be
+        expect(flash[:danger]).to be
       end
 
     end
@@ -154,7 +154,7 @@ RSpec.describe CampaignsController, :type => :controller do
         end
 
         it "redirects to :show" do
-          expect(response).to redirect_to(campaign_path(campaign))
+          expect(response).to redirect_to(campaign_path(campaign.reload))
         end
 
         it "sets a flash notice message" do
