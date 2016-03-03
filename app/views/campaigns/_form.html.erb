@@ -1,0 +1,7 @@
+<%= simple_form_for @campaign do |f| %>
+  <%= f.input :name, label: "Campaign Name", input_html: {class: "abc"} %>
+  <%= f.input :description, label: false %>
+  <%= f.input :goal, as: :string %>
+  <%= f.input :end_date %>
+  <%= f.submit class: "btn btn-primary btn-block" %>
+<% end %>

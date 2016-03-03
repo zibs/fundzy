@@ -1,6 +1,7 @@
 class CampaignsController < ApplicationController
   before_action :find_campaign, only: [:show, :edit, :update]
   before_action :authenticate_user, except: [:show, :index]
+  # before_action :authorize_user
 
   def index
     @campaigns = Campaign.order("created_at ASC")
@@ -12,11 +13,12 @@ class CampaignsController < ApplicationController
 
   def create
     @campaign = Campaign.new(campaign_params)
+    @campaign.user = current_user
     if @campaign.save
-      flash[:notice] = "Campaign Created"
+      flash[:success] = "Campaign Created"
       redirect_to campaign_path(@campaign)
     else
-      flash[:alert] = "Campaign not created"
+      flash[:danger] = "Campaign not created"
       render :new
     end
     # this sends successful empty http response (200)
@@ -44,7 +46,7 @@ class CampaignsController < ApplicationController
     user_campaign.destroy
     # campaign = current_user.campaigns.find(params[:id])
     # campaign.destroy
-    redirect_to((root_path), flash: {danger: "task removed!"})
+    redirect_to((root_path), flash: {danger: "Campaign removed!"})
   end
 
       private
