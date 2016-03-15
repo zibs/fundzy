@@ -7,3 +7,11 @@
 
 <%= link_to "Edit" , edit_campaign_path(@campaign), class: "btn btn-info"%>
 <%= link_to "Destroy", @campaign, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
+
+<h2>Rewards</h2>
+<% @campaign.rewards.each do |r| %>
+  <div class="well">
+    <h3><%= r.title %></h3>
+     <p><%= number_to_currency(r.amount) %></p>
+  </div>
+<% end %>

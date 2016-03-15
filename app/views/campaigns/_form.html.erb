@@ -5,5 +5,13 @@
   <%= f.input :end_date %>
   <%= f.input :image, input_html: {class: "btn btn-primary"} %>
   <%# f.file_field :image %>
+  <div id="rewards">
+    <% f.simple_fields_for :rewards do |r| %>
+      <%= render "reward_fields", f: r %>
+    <% end %>
+  <div class="links">
+    <%= link_to_add_association "Add Rewards", f, :rewards %>
+  </div>
+</div>
   <%= f.submit class: "btn btn-primary btn-block" %>
 <% end %>

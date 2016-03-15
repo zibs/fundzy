@@ -27,6 +27,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bcrypt', '~> 3.1.7'
 gem 'cancancan'
 gem 'simple_form'
+gem "cocoon"
+
 gem 'friendly_id', '~> 5.1.0'
 gem 'figaro'
 
@@ -59,7 +61,6 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'hirb'

@@ -16,6 +16,15 @@ class ImageUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
+  # version :banner, if: :is_landscape?
+  # def is_landscape? picture
+  #   Rails.logger.info ">>>>>>>>>>>>>>>>>> #{picture.public_url}"
+  #   Rails.logger.info ">>>>>>>>>>>>>>>>>> #{picture.methods}"
+  #   image = MiniMagick::Image.open(Rails.root.join(picture.path))
+  #   Rails.logger.info ">>> #{image[:width]} >>>> #{image[:height]}"
+  #   image[:width] > image[:height]
+  # end
+
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
   #   # For Rails 3.1+ asset pipeline compatibility:
