@@ -5,8 +5,8 @@ class CampaignsController < ApplicationController
   REWARD_COUNT = 3
 
   def index
-    @campaigns = Campaign.order("created_at ASC")
-
+    # @campaigns = Campaign.order("created_at ASC")
+    @campaigns = Campaign.order("created_at ASC").published
   end
 
   def new

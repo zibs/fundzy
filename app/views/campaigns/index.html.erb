@@ -1,7 +1,9 @@
 <h1>Recent Campaigns</h1>
 <h2>All Campaigns</h2>
-<% @campaigns.each do |c| %>
-  <div class="well">
-    <%= link_to c.name, c %>
-  </div>
+<% if @campaigns %>
+  <% @campaigns.each do |c| %>
+    <div class="well">
+      <%= link_to c.name, c %>
+    </div>
+  <% end %>
 <% end %>

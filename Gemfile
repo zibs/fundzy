@@ -37,6 +37,8 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
 
+
+gem 'aasm'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
