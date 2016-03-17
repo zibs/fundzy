@@ -39,6 +39,7 @@ gem 'fog'
 
 
 gem 'aasm'
+gem 'geocoder'
 # Use Unicorn as the app server
 # gem 'unicorn'
 

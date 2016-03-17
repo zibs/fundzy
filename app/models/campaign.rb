@@ -19,6 +19,10 @@ class Campaign < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :goal, presence: true, numericality: { greater_than_or_equal_to: 10 }
 
+  geocoded_by :address   # can also be an IP address in which means we don't need to request permissions
+  after_validation :geocode          # auto-fetch coordinates
+  # uses google to find/store coordinates
+
   include AASM
   # setting whiny_transistions false options makes it so it won't throw an exception when an invalid transition happens.
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160316202249) do
+ActiveRecord::Schema.define(version: 20160317201656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,9 @@ ActiveRecord::Schema.define(version: 20160316202249) do
     t.string   "slug"
     t.string   "image"
     t.string   "aasm_state"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "address"
   end
 
   add_index "campaigns", ["aasm_state"], name: "index_campaigns_on_aasm_state", using: :btree
