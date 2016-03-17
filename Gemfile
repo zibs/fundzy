@@ -39,7 +39,10 @@ gem 'fog'
 
 
 gem 'aasm'
+
 gem 'geocoder'
+gem 'gmaps4rails'
+gem 'underscore-rails'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
