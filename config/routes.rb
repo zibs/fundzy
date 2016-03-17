@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   end
 
   resources :my_campaigns, only: [:index]
+  resources :nearby_campaigns, only: [:index]
   resources :users, only: [:new, :create]
 
   resources :sessions, only: [:new, :create] do
