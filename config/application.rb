@@ -1,5 +1,4 @@
 require File.expand_path('../boot', __FILE__)
-
 require "rails"
 # Pick the frameworks you want:
 require "active_model/railtie"
@@ -30,6 +29,10 @@ module Fundzy
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.autoload_paths << Rails.root.join("app", "jobs")
+    config.autoload_paths << Rails.root.join("app", "uploaders")
     config.active_record.raise_in_transactional_callbacks = true
+    config.active_job.queue_adapter = :sidekiq
+
   end
 end

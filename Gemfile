@@ -43,6 +43,9 @@ gem 'aasm'
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'underscore-rails'
+
+gem 'sinatra'
+gem 'sidekiq'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
