@@ -8,6 +8,20 @@
 <% end %>
 
 <% if @campaign.longitude && @campaign.latitude %>
+<h1>Nearby Campaigns</h1>
+
+<div style='width: 800px;'>
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers(<%= raw markers(@campaigns).to_json %>);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+    });
+</script>
 
 <% end %>
 
@@ -28,4 +42,21 @@
     <h3><%= r.title %></h3>
      <p><%= number_to_currency(r.amount) %></p>
   </div>
+<% end %>
+
+<%= form_for [@campaign, @comment]  do |f| %>
+  <%= f.text_field :body, class: "form-control" %>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>
+
+
+
+<% if @campaign.comments.present? %>
+<hr>
+<h2>Comments</h2>
+  <% @campaign.comments.each do |com| %>
+    <div class="card">
+      <%= com.body %>
+    </div>
+  <% end %>
 <% end %>

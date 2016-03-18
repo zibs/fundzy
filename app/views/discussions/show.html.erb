@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @discussion.title %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @discussion.body %>
+</p>
+
+<%= link_to 'Edit', edit_discussion_path(@discussion) %> |
+<%= link_to 'Back', discussions_path %>
+
+
+<%= form_for [@discussion, @comment]  do |f| %>
+  <%= f.text_field :body, class: "form-control" %>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>
+
+
+
+<% if @discussion.comments.present? %>
+<hr>
+<h2>Comments</h2>
+  <% @discussion.comments.each do |com| %>
+    <div class="card">
+      <%= com.body %>
+    </div>
+  <% end %>
+<% end %>

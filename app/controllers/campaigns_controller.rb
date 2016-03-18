@@ -30,6 +30,7 @@ class CampaignsController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
     # find_by_id won't raise error if record is not found
   end
 

@@ -1,11 +1,15 @@
 require "sidekiq/web"
 Rails.application.routes.draw do
 mount Sidekiq::Web, at: '/sidekiq'
+resources :discussions do
+    resources :comments, only: [:create]
+end
 
   root "campaigns#index"
   resources :campaigns do
     resources :pledges, only: [:create, :destroy]
     resources :publishings, only: [:create]
+    resources :comments, only: [:create]
   end
 
   resources :my_campaigns, only: [:index]

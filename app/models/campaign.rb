@@ -12,6 +12,10 @@ class Campaign < ActiveRecord::Base
   has_many :rewards, dependent: :destroy
   # allblank means that empty will be ignored for validations
   # destroy lets us pass us in value true destory param to destory the obejct
+
+  # set up polymorphic association
+  has_many :comments, as: :commentable
+
   accepts_nested_attributes_for :rewards, reject_if: :all_blank, allow_destroy: true
 
   belongs_to :user
