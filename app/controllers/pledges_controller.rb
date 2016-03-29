@@ -6,12 +6,10 @@ class PledgesController < ApplicationController
   def create
     @campaign = Campaign.friendly.find(params[:campaign_id])
     @pledge = Pledge.new(pledge_params)
-
     @pledge.campaign = @campaign
     @pledge.user = current_user
-
     if @pledge.save
-      redirect_to campaign_path(@campaign), flash: { success: "Pledged!"}
+      redirect_to new_pledge_payment_path(@pledge), flash: { success: "Thanks for Pledging"}
     else
     render "campaigns/show"
     end

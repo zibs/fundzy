@@ -11,6 +11,9 @@ end
     resources :publishings, only: [:create]
     resources :comments, only: [:create]
   end
+  resources :pledges, only: [] do
+    resources :payments, only: [:new, :create]
+  end
 
   resources :my_campaigns, only: [:index]
   resources :nearby_campaigns, only: [:index]

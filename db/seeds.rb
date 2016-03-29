@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+100.times do
+  c = FactoryGirl.create(:campaign)
+  10.times { c.pledges.create(amount: rand(10000)) }
+end

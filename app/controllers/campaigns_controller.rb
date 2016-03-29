@@ -15,12 +15,14 @@ class CampaignsController < ApplicationController
   end
 
   def create
-    @campaign = Campaign.new(campaign_params)
-    @campaign.user = current_user
-    if @campaign.save
+    service = Campaigns::CreateCampaign.new(params: campaign_params, user: current_user)
+    # @campaign = Campaign.new(campaign_params)
+    # @campaign.user = current_user
+    if service.call
       flash[:success] = "Campaign Created"
-      redirect_to campaign_path(@campaign)
+      redirect_to campaign_path(service.campaign)
     else
+      @campaign.service.campaign
       build_associated_rewards
       flash[:danger] = "Campaign not created"
       render :new
@@ -30,6 +32,7 @@ class CampaignsController < ApplicationController
   end
 
   def show
+    @pledge = Pledge.new
     @comment = Comment.new
     # find_by_id won't raise error if record is not found
   end
@@ -68,7 +71,7 @@ class CampaignsController < ApplicationController
         end
 
         def find_campaign
-          @campaign = Campaign.friendly.find(params[:id])
+          @campaign = Campaign.friendly.find(params[:id]).decorate
         end
 
         def user_campaign

@@ -29,8 +29,12 @@ module Fundzy
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
+
+    # rails console will only load standard helpers, and if we want thme to be loaded in the console, we need to autoload them
     config.autoload_paths << Rails.root.join("app", "jobs")
     config.autoload_paths << Rails.root.join("app", "uploaders")
+    config.autoload_paths << Rails.root.join("app", "decorators")
+    config.autoload_paths << Rails.root.join("app", "services")
     config.active_record.raise_in_transactional_callbacks = true
     config.active_job.queue_adapter = :sidekiq
 

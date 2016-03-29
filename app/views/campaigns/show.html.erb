@@ -1,7 +1,11 @@
-<h1><%= @campaign.name.titleize %></h1>
+<h1><%= @campaign.name %></h1>
+
 <p><%= @campaign.description %></p>
+
 <p>Goal: <%= number_to_currency(@campaign.goal) %></p>
-<p>End Date: <%= formatted_date_time(@campaign.end_date) %></p>
+
+<p>End Date: <%= @campaign.end_date %></p>
+
 
 <% if @campaign.image.present? %>
 <%= image_tag @campaign.image.url(:medium) %>
@@ -25,16 +29,21 @@
 
 <% end %>
 
+<h2>Pledge to this Campaign</h2>
+<%= form_for [@campaign, @pledge] do |f| %>
+  <%= f.text_field :amount %>
+  <%= f.submit class: "btn btn-primary-outline" %>
+<% end %>
+
 
 <%= link_to "Edit" , edit_campaign_path(@campaign), class: "btn btn-info"%>
 <%= link_to "Destroy", @campaign, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
 
-<% if @campaign.draft? %>
-<%= link_to "Publish", campaign_publishings_path(@campaign), method: :post, class: "btn btn-success-outline" %>
-<% end %>
-<div class="label label-default">
-  <%= @campaign.aasm_state %>
-</div>
+<%= @campaign.publish_button %>
+
+
+<%= @campaign.state_label %>
+
 
 <h2>Rewards</h2>
 <% @campaign.rewards.each do |r| %>
@@ -48,8 +57,6 @@
   <%= f.text_field :body, class: "form-control" %>
   <%= f.submit class: "btn btn-primary" %>
 <% end %>
-
-
 
 <% if @campaign.comments.present? %>
 <hr>
