@@ -6,7 +6,7 @@ class Payments::HandlePayment
   attribute :pledge, Pledge
 
   def call
-    create_customer && create_charge_for_customer
+    create_customer && charge_customer
     update_pledge
     # redirect_to pledge.campaign, notice: "Thanks for completing the payment"
     # render text: "Got the token #{params[:stripe_token]}"
@@ -15,7 +15,7 @@ class Payments::HandlePayment
 private
 
     def update_pledge
-      pledge.stripe_txn_id = charge.id
+      pledge.stripe_txn_id = @charge_id
       pledge.save
     end
 
@@ -24,20 +24,24 @@ private
       customer_service.call
     end
 
-    def create_charge_for_customer
-      begin
-        charge
-      rescue => e
-        false
-      end
+    # def create_charge_for_customer
+    #   begin
+    #     charge
+    #   rescue => e
+    #     false
+    #   end
+    # end
+
+    def charge_customer
+      service = Payments::Stripe::CreateCharge.new(user: user, amount: amount, description: description)
+      @charge_id = service.charge_id if service.call
     end
 
-    def charge
-      @charge ||= Stripe::Charge.create(
-                amount: pledge.amount * 100,
-                currency: "cad",
-                customer: user.stripe_customer_id,
-                description: "Charge for pledge id: #{pledge.id} "
-      )
+    def amount
+      pledge.amount * 100
+    end
+
+    def description
+      "Charge for pledge id: #{pledge.id}"
     end
 end
